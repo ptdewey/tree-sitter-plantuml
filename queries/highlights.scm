@@ -1,6 +1,7 @@
 ;; Keywords
 (preprocessor) @keyword
 (keyword) @keyword
+(number) @number
 [
  "from"
  "as"
@@ -18,6 +19,9 @@
 (theme "!theme" @keyword)
 (theme name: (identifier) @identifier)
 (theme url: (url) @string)
+
+;; Skinparameters
+(skinparameter "skinparam" @property)
 
 ;; Comments
 (comment) @comment

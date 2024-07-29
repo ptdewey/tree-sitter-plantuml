@@ -5,6 +5,8 @@
 !include <C4/C4_Context>
 !include ./include.puml
 
+skinparam dpi 300
+
 rectangle r
 
 node "with text" as n

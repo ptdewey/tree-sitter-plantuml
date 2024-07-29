@@ -16,9 +16,18 @@ module.exports = grammar({
         $.delimiter,
         $.keyword,
         $.comment,
+        $.skinparameter,
       ),
 
-    preprocessor: ($) => seq("!", $.identifier),
+    // FIX: associativity
+    preprocessor: ($) =>
+      prec.left(
+        seq(
+          "!",
+          $.identifier,
+          optional(choice($.statement, $.identifier, $.string)),
+        ),
+      ),
 
     include: ($) =>
       seq(
@@ -89,7 +98,11 @@ module.exports = grammar({
 
     keyword: (_) => /@.*/,
 
-    skinparameter: (_) => token(/.*/), // TODO: placeholder for skinparameter
+    // TEST: make sure works for more cases
+    skinparameter: ($) =>
+      seq("skinparam", $.identifier, choice($.number, $.identifier)),
+    skinparam: (_) => "skinparam",
+    number: (_) => /\d+/,
 
     color: (_) => token(/.*/), // TODO: placeholder for color
   },

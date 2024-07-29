@@ -203,11 +203,38 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "statement",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "skinparameter",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
           "named": true
         }
       ]
@@ -247,6 +274,10 @@
         },
         {
           "type": "preprocessor",
+          "named": true
+        },
+        {
+          "type": "skinparameter",
           "named": true
         },
         {
@@ -353,6 +384,14 @@
   {
     "type": "non_breakable_identifier",
     "named": true
+  },
+  {
+    "type": "number",
+    "named": true
+  },
+  {
+    "type": "skinparam",
+    "named": false
   },
   {
     "type": "string",
