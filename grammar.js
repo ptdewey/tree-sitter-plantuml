@@ -1,10 +1,6 @@
 module.exports = grammar({
   name: "plantuml",
 
-  precedences: ($) => [["component", "block"]],
-
-  conflicts: ($) => [[$.component, $.block]],
-
   rules: {
     document: ($) => repeat($.statement),
 
@@ -17,7 +13,7 @@ module.exports = grammar({
         $.theme,
         $.component,
         $.block,
-        // $.type,
+        $.delimiter,
         $.keyword,
         $.comment,
       ),
@@ -30,20 +26,25 @@ module.exports = grammar({
         choice(
           field("url", $.url),
           field("filepath", $.filepath),
-          seq("<", field("library", $.non_breakable_identifier), ">"),
+          field(
+            "library",
+            seq($.include_open, $.non_breakable_identifier, $.include_close),
+          ),
         ),
       ),
+    include_open: (_) => "<",
+    include_close: (_) => ">",
 
     theme: ($) =>
       seq("!theme", field("name", $.identifier), "from", field("url", $.url)),
 
-    url: ($) => token(/https?:\/\/[^\s<>"]+/),
+    url: (_) => token(/https?:\/\/[^\s<>"]+/),
 
-    filepath: ($) => token(/[^\s<>"]+/),
+    filepath: (_) => token(/[^\s<>"]+/),
 
     component: ($) =>
       seq(
-        field("type", $.identifier), // TODO: change identifier to type and allow stdlib/custom defs
+        field("method", $.identifier), // TODO: change identifier to type and allow stdlib/custom defs
         field("tag", $.attribute),
         optional(seq("as", field("alias", $.identifier))),
         optional($.attribute_list),
@@ -54,23 +55,37 @@ module.exports = grammar({
     block: ($) =>
       seq(
         // TODO: fix stuff before block, could be c4 func or 'rectangle "text" as rect'
-        choice($.identifier, field("component", $.component)),
-        "{",
+        choice(field("object", $.identifier), field("component", $.component)),
+        // "{",
+        $.block_open,
         repeat($.statement),
-        "}",
+        // "}",
+        $.block_close,
       ),
+    block_open: (_) => "{",
+    block_close: (_) => "}",
 
-    attribute_list: ($) => seq("(", sepBy1(",", $.attribute), ")"),
+    attribute_list: ($) =>
+      seq(
+        $.attribute_list_open,
+        sepBy1($.attribute_sep, $.attribute),
+        $.attribute_list_close,
+      ),
+    attribute_sep: (_) => ",",
+    attribute_list_open: (_) => "(",
+    attribute_list_close: (_) => ")",
 
     attribute: ($) => choice($.identifier, $.string),
 
     identifier: (_) => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
-    non_breakable_identifier: ($) => /[a-zA-Z0-9_\/.\-]+/,
+    non_breakable_identifier: (_) => /[a-zA-Z0-9_\/.\-]+/,
 
     string: (_) => token(seq('"', /[^"]*/, '"')),
 
     comment: (_) => token(/'.*/),
+
+    delimiter: (_) => token(/[\{\(\[\.\]\)\}]/),
 
     keyword: (_) => /@.*/,
 

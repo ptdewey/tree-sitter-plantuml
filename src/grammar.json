@@ -33,6 +33,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "delimiter"
+        },
+        {
+          "type": "SYMBOL",
           "name": "keyword"
         },
         {
@@ -81,29 +85,37 @@
               }
             },
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "<"
-                },
-                {
-                  "type": "FIELD",
-                  "name": "library",
-                  "content": {
+              "type": "FIELD",
+              "name": "library",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "include_open"
+                  },
+                  {
                     "type": "SYMBOL",
                     "name": "non_breakable_identifier"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "include_close"
                   }
-                },
-                {
-                  "type": "STRING",
-                  "value": ">"
-                }
-              ]
+                ]
+              }
             }
           ]
         }
       ]
+    },
+    "include_open": {
+      "type": "STRING",
+      "value": "<"
+    },
+    "include_close": {
+      "type": "STRING",
+      "value": ">"
     },
     "theme": {
       "type": "SEQ",
@@ -153,7 +165,7 @@
       "members": [
         {
           "type": "FIELD",
-          "name": "type",
+          "name": "method",
           "content": {
             "type": "SYMBOL",
             "name": "identifier"
@@ -225,8 +237,12 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "identifier"
+              "type": "FIELD",
+              "name": "object",
+              "content": {
+                "type": "SYMBOL",
+                "name": "identifier"
+              }
             },
             {
               "type": "FIELD",
@@ -239,8 +255,8 @@
           ]
         },
         {
-          "type": "STRING",
-          "value": "{"
+          "type": "SYMBOL",
+          "name": "block_open"
         },
         {
           "type": "REPEAT",
@@ -250,17 +266,25 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "}"
+          "type": "SYMBOL",
+          "name": "block_close"
         }
       ]
+    },
+    "block_open": {
+      "type": "STRING",
+      "value": "{"
+    },
+    "block_close": {
+      "type": "STRING",
+      "value": "}"
     },
     "attribute_list": {
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "("
+          "type": "SYMBOL",
+          "name": "attribute_list_open"
         },
         {
           "type": "SEQ",
@@ -275,8 +299,8 @@
                 "type": "SEQ",
                 "members": [
                   {
-                    "type": "STRING",
-                    "value": ","
+                    "type": "SYMBOL",
+                    "name": "attribute_sep"
                   },
                   {
                     "type": "SYMBOL",
@@ -288,10 +312,22 @@
           ]
         },
         {
-          "type": "STRING",
-          "value": ")"
+          "type": "SYMBOL",
+          "name": "attribute_list_close"
         }
       ]
+    },
+    "attribute_sep": {
+      "type": "STRING",
+      "value": ","
+    },
+    "attribute_list_open": {
+      "type": "STRING",
+      "value": "("
+    },
+    "attribute_list_close": {
+      "type": "STRING",
+      "value": ")"
     },
     "attribute": {
       "type": "CHOICE",
@@ -341,6 +377,13 @@
         "value": "'.*"
       }
     },
+    "delimiter": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[\\{\\(\\[\\.\\]\\)\\}]"
+      }
+    },
     "keyword": {
       "type": "PATTERN",
       "value": "@.*"
@@ -366,24 +409,8 @@
       "value": "\\s"
     }
   ],
-  "conflicts": [
-    [
-      "component",
-      "block"
-    ]
-  ],
-  "precedences": [
-    [
-      {
-        "type": "STRING",
-        "value": "component"
-      },
-      {
-        "type": "STRING",
-        "value": "block"
-      }
-    ]
-  ],
+  "conflicts": [],
+  "precedences": [],
   "externals": [],
   "inline": [],
   "supertypes": []

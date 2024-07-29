@@ -29,6 +29,18 @@
         {
           "type": "attribute",
           "named": true
+        },
+        {
+          "type": "attribute_list_close",
+          "named": true
+        },
+        {
+          "type": "attribute_list_open",
+          "named": true
+        },
+        {
+          "type": "attribute_sep",
+          "named": true
         }
       ]
     }
@@ -46,14 +58,28 @@
             "named": true
           }
         ]
+      },
+      "object": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "identifier",
+          "type": "block_close",
+          "named": true
+        },
+        {
+          "type": "block_open",
           "named": true
         },
         {
@@ -77,22 +103,22 @@
           }
         ]
       },
+      "method": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
       "tag": {
         "multiple": false,
         "required": true,
         "types": [
           {
             "type": "attribute",
-            "named": true
-          }
-        ]
-      },
-      "type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
             "named": true
           }
         ]
@@ -143,9 +169,17 @@
         ]
       },
       "library": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
+          {
+            "type": "include_close",
+            "named": true
+          },
+          {
+            "type": "include_open",
+            "named": true
+          },
           {
             "type": "non_breakable_identifier",
             "named": true
@@ -197,6 +231,10 @@
         },
         {
           "type": "component",
+          "named": true
+        },
+        {
+          "type": "delimiter",
           "named": true
         },
         {
@@ -257,31 +295,35 @@
     "named": false
   },
   {
-    "type": "(",
-    "named": false
-  },
-  {
-    "type": ")",
-    "named": false
-  },
-  {
-    "type": ",",
-    "named": false
-  },
-  {
-    "type": "<",
-    "named": false
-  },
-  {
-    "type": ">",
-    "named": false
-  },
-  {
     "type": "as",
     "named": false
   },
   {
+    "type": "attribute_list_close",
+    "named": true
+  },
+  {
+    "type": "attribute_list_open",
+    "named": true
+  },
+  {
+    "type": "attribute_sep",
+    "named": true
+  },
+  {
+    "type": "block_close",
+    "named": true
+  },
+  {
+    "type": "block_open",
+    "named": true
+  },
+  {
     "type": "comment",
+    "named": true
+  },
+  {
+    "type": "delimiter",
     "named": true
   },
   {
@@ -294,6 +336,14 @@
   },
   {
     "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "include_close",
+    "named": true
+  },
+  {
+    "type": "include_open",
     "named": true
   },
   {
@@ -311,13 +361,5 @@
   {
     "type": "url",
     "named": true
-  },
-  {
-    "type": "{",
-    "named": false
-  },
-  {
-    "type": "}",
-    "named": false
   }
 ]
