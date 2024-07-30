@@ -5,7 +5,7 @@
 !include <C4/C4_Context>
 !include ./include.puml
 
-skinparam dpi 300
+skinparam dpi 200
 
 rectangle r
 
@@ -16,7 +16,7 @@ interface "i" as int
 System(system, "system", "desc")
 
 System_Boundary(sys, "boundary") {
-    Container(con, "container", "tech", "descriptiion")
+    Container(con, "container", "tech", "description")
 }
 
 Rel(system, con, "text")
@@ -25,5 +25,29 @@ together {
   circle "circle text" as c
   hexagon h
 }
+
+database "database" as db #line.dashed:red
+
+hexagon "database" as hex #line.dashed:red {
+    circle circ
+}
+
+' This is a comment
+
+/'
+' this is a block comment
+'/
+
+h -> c
+
+c --> h
+
+h -[hidden]-> n
+
+n -[hidden] r
+
+r <-[hidden]- n
+
+r <-l-> n
 
 @enduml

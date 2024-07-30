@@ -1,5 +1,46 @@
 [
   {
+    "type": "annotation",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "arrow",
+    "named": true,
+    "fields": {
+      "lhs": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "rhs": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "annotation",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "attribute",
     "named": true,
     "fields": {},
@@ -75,6 +116,14 @@
       "required": true,
       "types": [
         {
+          "type": "arrow",
+          "named": true
+        },
+        {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "block_close",
           "named": true
         },
@@ -83,11 +132,44 @@
           "named": true
         },
         {
-          "type": "statement",
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "component",
+          "named": true
+        },
+        {
+          "type": "delimiter",
+          "named": true
+        },
+        {
+          "type": "include",
+          "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "preprocessor",
+          "named": true
+        },
+        {
+          "type": "skinparameter",
+          "named": true
+        },
+        {
+          "type": "theme",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "comment",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "component",
@@ -135,6 +217,10 @@
         {
           "type": "string",
           "named": true
+        },
+        {
+          "type": "style",
+          "named": true
         }
       ]
     }
@@ -148,7 +234,43 @@
       "required": false,
       "types": [
         {
-          "type": "statement",
+          "type": "arrow",
+          "named": true
+        },
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "component",
+          "named": true
+        },
+        {
+          "type": "delimiter",
+          "named": true
+        },
+        {
+          "type": "include",
+          "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "preprocessor",
+          "named": true
+        },
+        {
+          "type": "skinparameter",
+          "named": true
+        },
+        {
+          "type": "theme",
           "named": true
         }
       ]
@@ -199,6 +321,11 @@
     }
   },
   {
+    "type": "include_open",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "preprocessor",
     "named": true,
     "fields": {},
@@ -207,15 +334,51 @@
       "required": true,
       "types": [
         {
+          "type": "arrow",
+          "named": true
+        },
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "component",
+          "named": true
+        },
+        {
+          "type": "delimiter",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
         {
-          "type": "statement",
+          "type": "include",
+          "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "preprocessor",
+          "named": true
+        },
+        {
+          "type": "skinparameter",
           "named": true
         },
         {
           "type": "string",
+          "named": true
+        },
+        {
+          "type": "theme",
           "named": true
         }
       ]
@@ -241,47 +404,26 @@
     }
   },
   {
-    "type": "statement",
+    "type": "style",
     "named": true,
-    "fields": {},
+    "fields": {
+      "style_param": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "non_breakable_identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": false,
-      "required": true,
+      "multiple": true,
+      "required": false,
       "types": [
         {
-          "type": "block",
-          "named": true
-        },
-        {
-          "type": "comment",
-          "named": true
-        },
-        {
-          "type": "component",
-          "named": true
-        },
-        {
-          "type": "delimiter",
-          "named": true
-        },
-        {
-          "type": "include",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        },
-        {
-          "type": "preprocessor",
-          "named": true
-        },
-        {
-          "type": "skinparameter",
-          "named": true
-        },
-        {
-          "type": "theme",
+          "type": "style_sep",
           "named": true
         }
       ]
@@ -326,6 +468,26 @@
     "named": false
   },
   {
+    "type": "#",
+    "named": false
+  },
+  {
+    "type": "-",
+    "named": false
+  },
+  {
+    "type": "<",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
+    "named": false
+  },
+  {
     "type": "as",
     "named": false
   },
@@ -350,10 +512,6 @@
     "named": true
   },
   {
-    "type": "comment",
-    "named": true
-  },
-  {
     "type": "delimiter",
     "named": true
   },
@@ -366,15 +524,15 @@
     "named": false
   },
   {
+    "type": "hidden",
+    "named": false
+  },
+  {
     "type": "identifier",
     "named": true
   },
   {
     "type": "include_close",
-    "named": true
-  },
-  {
-    "type": "include_open",
     "named": true
   },
   {
@@ -395,6 +553,10 @@
   },
   {
     "type": "string",
+    "named": true
+  },
+  {
+    "type": "style_sep",
     "named": true
   },
   {

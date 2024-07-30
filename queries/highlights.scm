@@ -1,7 +1,6 @@
 ;; Keywords
 (preprocessor) @keyword
 (keyword) @keyword
-(number) @number
 [
  "from"
  "as"
@@ -29,6 +28,9 @@
 ;; Strings
 (string) @string
 
+;; Number
+(number) @number
+
 ;; Components and Blocks
 (component) @type
 (component method: (identifier) @identifier)
@@ -53,3 +55,7 @@
 ;; URLs and Filepaths
 (url) @string
 (filepath) @string
+
+;; Style
+(style) @property
+(style (style_sep) @punctuation.delimiter)

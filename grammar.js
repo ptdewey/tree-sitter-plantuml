@@ -2,11 +2,10 @@ module.exports = grammar({
   name: "plantuml",
 
   rules: {
-    document: ($) => repeat($.statement),
+    document: ($) => repeat($._statement),
 
     // FIX: statement as main type should be able to allow string alias
-    // FIX: styling of objects (#line.dashed)
-    statement: ($) =>
+    _statement: ($) =>
       choice(
         $.preprocessor,
         $.include,
@@ -17,6 +16,7 @@ module.exports = grammar({
         $.keyword,
         $.comment,
         $.skinparameter,
+        $.arrow,
       ),
 
     // FIX: associativity
@@ -25,7 +25,7 @@ module.exports = grammar({
         seq(
           "!",
           $.identifier,
-          optional(choice($.statement, $.identifier, $.string)),
+          optional(choice($._statement, $.identifier, $.string)),
         ),
       ),
 
@@ -52,12 +52,19 @@ module.exports = grammar({
     filepath: (_) => token(/[^\s<>"]+/),
 
     component: ($) =>
-      seq(
-        field("method", $.identifier), // TODO: change identifier to type and allow stdlib/custom defs
-        field("tag", $.attribute),
-        optional(seq("as", field("alias", $.identifier))),
-        optional($.attribute_list),
-        optional($.string),
+      prec.left(
+        2,
+        seq(
+          field("method", $.identifier), // TODO: change identifier to type and allow stdlib/custom defs
+          // TODO: correctly handle func() style components
+          // (currently shows nonexistent attribute and tag in ast)
+          field("tag", $.attribute),
+          optional(seq("as", field("alias", $.identifier))),
+          optional($.attribute_list),
+          // TODO: '$param=' handling
+          optional($.string),
+          optional($.style),
+        ),
       ),
 
     // TODO: figure out if component should be inside/outside/replaced by block
@@ -65,10 +72,8 @@ module.exports = grammar({
       seq(
         // TODO: fix stuff before block, could be c4 func or 'rectangle "text" as rect'
         choice(field("object", $.identifier), field("component", $.component)),
-        // "{",
         $.block_open,
-        repeat($.statement),
-        // "}",
+        repeat($._statement),
         $.block_close,
       ),
     block_open: (_) => "{",
@@ -92,7 +97,11 @@ module.exports = grammar({
 
     string: (_) => token(seq('"', /[^"]*/, '"')),
 
-    comment: (_) => token(/'.*/),
+    comment: (_) =>
+      choice(
+        token(seq("\n'", /.*/)),
+        token(seq("/'", repeat(choice(/[^']/, /'[^\/]/, /'\/[^']/)), "'/")),
+      ),
 
     delimiter: (_) => token(/[\{\(\[\.\]\)\}]/),
 
@@ -101,10 +110,29 @@ module.exports = grammar({
     // TEST: make sure works for more cases
     skinparameter: ($) =>
       seq("skinparam", $.identifier, choice($.number, $.identifier)),
-    skinparam: (_) => "skinparam",
+
     number: (_) => /\d+/,
 
-    color: (_) => token(/.*/), // TODO: placeholder for color
+    style: ($) =>
+      seq(
+        "#",
+        sepBy1($.style_sep, field("style_param", $.non_breakable_identifier)),
+      ),
+    style_sep: (_) => ":",
+
+    // TODO: cover remaining cases
+    arrow: ($) =>
+      seq(
+        field("lhs", $.identifier),
+        optional("<"),
+        repeat1("-"),
+        optional($.annotation), // TODO: better annotation handling (must be followed with ], -, or >)
+        optional(repeat(/[\->]/)),
+        field("rhs", $.identifier),
+      ),
+
+    // TODO: annotation needs to also allow directions (and not wrapped in [])
+    annotation: (_) => seq("[", "hidden", "]"),
   },
 });
 
