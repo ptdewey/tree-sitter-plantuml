@@ -1,8 +1,13 @@
 module.exports = grammar({
   name: "plantuml",
 
+  // TODO: figure out if there is some way to identify if there are too many components on the same line on the treesitter side
   rules: {
     document: ($) => repeat($._statement),
+
+    // TEST: if this is necessary and/or works correctly
+    // WARNING: do not move this above 'document' or things will break
+    word: ($) => $.identifier,
 
     // FIX: statement as main type should be able to allow string alias
     _statement: ($) =>
@@ -99,8 +104,10 @@ module.exports = grammar({
 
     comment: (_) =>
       choice(
-        token(seq("\n'", /.*/)),
-        token(seq("/'", repeat(choice(/[^']/, /'[^\/]/, /'\/[^']/)), "'/")),
+        token(seq(/\n\s*'/, /.*/)),
+        // FIX: disallow block comments from starting at end of line and not ending on same line
+        // - block comments can only be used after non-whitespace characters if it also ends on same line
+        token(seq("/'", repeat(choice(/[^']/, seq("'", /[^/]/))), "'/")),
       ),
 
     delimiter: (_) => token(/[\{\(\[\.\]\)\}]/),

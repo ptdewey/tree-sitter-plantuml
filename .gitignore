@@ -36,3 +36,6 @@ dist/
 *.wasm
 *.obj
 *.o
+
+# Test diagrams
+./test/puml/*.png

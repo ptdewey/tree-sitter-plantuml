@@ -16,17 +16,23 @@ interface "i" as int
 System(system, "system", "desc")
 
 System_Boundary(sys, "boundary") {
+    ' This is a comment
     Container(con, "container", "tech", "description")
 }
 
 Rel(system, con, "text")
 
 together {
-  circle "circle text" as c
+  circle "circle text" as c /'
+        this is not allowed
+  '/
   hexagon h
 }
 
-database "database" as db #line.dashed:red
+/'
+ text
+'/
+database "database" as db #line.dashed:red /' text here '/
 
 hexagon "database" as hex #line.dashed:red {
     circle circ

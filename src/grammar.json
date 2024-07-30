@@ -8,6 +8,10 @@
         "name": "_statement"
       }
     },
+    "word": {
+      "type": "SYMBOL",
+      "name": "identifier"
+    },
     "_statement": {
       "type": "CHOICE",
       "members": [
@@ -432,8 +436,8 @@
             "type": "SEQ",
             "members": [
               {
-                "type": "STRING",
-                "value": "\n'"
+                "type": "PATTERN",
+                "value": "\\n\\s*'"
               },
               {
                 "type": "PATTERN",
@@ -461,12 +465,17 @@
                       "value": "[^']"
                     },
                     {
-                      "type": "PATTERN",
-                      "value": "'[^\\/]"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "'\\/[^']"
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "STRING",
+                          "value": "'"
+                        },
+                        {
+                          "type": "PATTERN",
+                          "value": "[^/]"
+                        }
+                      ]
                     }
                   ]
                 }
