@@ -452,8 +452,8 @@
             "type": "SEQ",
             "members": [
               {
-                "type": "STRING",
-                "value": "/'"
+                "type": "PATTERN",
+                "value": "\\n[ \\t]*\\/'"
               },
               {
                 "type": "REPEAT",
@@ -478,6 +478,29 @@
                       ]
                     }
                   ]
+                }
+              },
+              {
+                "type": "STRING",
+                "value": "'/"
+              }
+            ]
+          }
+        },
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "\\/'"
+              },
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[^\\n]+"
                 }
               },
               {

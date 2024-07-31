@@ -105,9 +105,10 @@ module.exports = grammar({
     comment: (_) =>
       choice(
         token(seq(/\n\s*'/, /.*/)),
-        // FIX: disallow block comments from starting at end of line and not ending on same line
-        // - block comments can only be used after non-whitespace characters if it also ends on same line
-        token(seq("/'", repeat(choice(/[^']/, seq("'", /[^/]/))), "'/")),
+        token(
+          seq(/\n[ \t]*\/'/, repeat(choice(/[^']/, seq("'", /[^/]/))), "'/"),
+        ),
+        token(seq(/\/'/, repeat(/[^\n]+/), "'/")),
       ),
 
     delimiter: (_) => token(/[\{\(\[\.\]\)\}]/),

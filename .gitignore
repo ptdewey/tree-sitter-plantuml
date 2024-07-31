@@ -38,4 +38,4 @@ dist/
 *.o
 
 # Test diagrams
-./test/puml/*.png
+test/puml/*.png

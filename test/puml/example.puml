@@ -22,6 +22,7 @@ System_Boundary(sys, "boundary") {
 
 Rel(system, con, "text")
 
+' This is a comment
 together {
   circle "circle text" as c /'
         this is not allowed
@@ -32,17 +33,14 @@ together {
 /'
  text
 '/
-database "database" as db #line.dashed:red /' text here '/
+database "database" as db #line.dashed:red /' this is allowed '/
 
+/'
+' another comment '/
 hexagon "database" as hex #line.dashed:red {
     circle circ
 }
 
-' This is a comment
-
-/'
-' this is a block comment
-'/
 
 h -> c
 
