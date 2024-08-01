@@ -6,7 +6,6 @@ module.exports = grammar({
     document: ($) => repeat($._statement),
 
     // TEST: if this is necessary and/or works correctly
-    // WARNING: do not move this above 'document' or things will break
     word: ($) => $.identifier,
 
     // FIX: statement as main type should be able to allow string alias
@@ -24,7 +23,6 @@ module.exports = grammar({
         $.arrow,
       ),
 
-    // FIX: associativity
     preprocessor: ($) =>
       prec.left(
         seq(
@@ -66,16 +64,13 @@ module.exports = grammar({
           field("tag", $.attribute),
           optional(seq("as", field("alias", $.identifier))),
           optional($.attribute_list),
-          // TODO: '$param=' handling
           optional($.string),
           optional($.style),
         ),
       ),
 
-    // TODO: figure out if component should be inside/outside/replaced by block
     block: ($) =>
       seq(
-        // TODO: fix stuff before block, could be c4 func or 'rectangle "text" as rect'
         choice(field("object", $.identifier), field("component", $.component)),
         $.block_open,
         repeat($._statement),
@@ -94,7 +89,8 @@ module.exports = grammar({
     attribute_list_open: (_) => "(",
     attribute_list_close: (_) => ")",
 
-    attribute: ($) => choice($.identifier, $.string),
+    attribute: ($) =>
+      seq(optional(/\$\w+\s*=/), choice($.identifier, $.string)),
 
     identifier: (_) => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
@@ -128,19 +124,29 @@ module.exports = grammar({
       ),
     style_sep: (_) => ":",
 
-    // TODO: cover remaining cases
+    // TODO: cover remaining cases (other ends and lines)
     arrow: ($) =>
       seq(
         field("lhs", $.identifier),
-        optional("<"),
-        repeat1("-"),
-        optional($.annotation), // TODO: better annotation handling (must be followed with ], -, or >)
-        optional(repeat(/[\->]/)),
+        optional(choice("*", "o", "<", ".")),
+        repeat1(choice("-", "~", "=")), // TODO: are there any others?
+        optional(
+          seq(field("annotation", $.annotation), optional(repeat(/[->]/))), // TODO: make sure correct arrow is used (if it is strict)
+        ),
         field("rhs", $.identifier),
       ),
 
-    // TODO: annotation needs to also allow directions (and not wrapped in [])
-    annotation: (_) => seq("[", "hidden", "]"),
+    // TODO: apparently you can do line styling and colors in [] annotations so cover those
+    annotation: (_) =>
+      token(
+        repeat(
+          seq(
+            optional(seq("[", /hidden/, "]")),
+            optional(choice("l", "left", "r", "right", "u", "up", "d", "down")),
+            optional(repeat(/[->]/)), // TODO: make sure correct arrow is used (if it is strict)
+          ),
+        ),
+      ),
   },
 });
 

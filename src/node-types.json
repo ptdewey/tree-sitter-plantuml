@@ -1,13 +1,18 @@
 [
   {
-    "type": "annotation",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "arrow",
     "named": true,
     "fields": {
+      "annotation": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "annotation",
+            "named": true
+          }
+        ]
+      },
       "lhs": {
         "multiple": false,
         "required": true,
@@ -28,16 +33,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "annotation",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -472,7 +467,15 @@
     "named": false
   },
   {
+    "type": "*",
+    "named": false
+  },
+  {
     "type": "-",
+    "named": false
+  },
+  {
+    "type": ".",
     "named": false
   },
   {
@@ -480,12 +483,12 @@
     "named": false
   },
   {
-    "type": "[",
+    "type": "=",
     "named": false
   },
   {
-    "type": "]",
-    "named": false
+    "type": "annotation",
+    "named": true
   },
   {
     "type": "as",
@@ -524,10 +527,6 @@
     "named": false
   },
   {
-    "type": "hidden",
-    "named": false
-  },
-  {
     "type": "identifier",
     "named": true
   },
@@ -548,6 +547,10 @@
     "named": true
   },
   {
+    "type": "o",
+    "named": false
+  },
+  {
     "type": "skinparam",
     "named": false
   },
@@ -562,5 +565,9 @@
   {
     "type": "url",
     "named": true
+  },
+  {
+    "type": "~",
+    "named": false
   }
 ]

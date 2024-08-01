@@ -1,0 +1,44 @@
+@startuml
+
+circle A
+circle B
+
+A -> B
+A <- B
+A - B
+A -- B
+
+A -down-> B
+A -up- B
+A -left-> B
+A -right-> B
+
+A -[hidden]-> B
+A -[hidden]down-> B
+A -[hidden]left- B
+A <-[hidden]right- B
+A -right[hidden]-> B
+
+A *- B
+A o-> B
+A <-> B
+A .-> B
+
+A -[hidden]left-> B
+A o-[hidden]right-> B
+A *-up[hidden]-> B
+A <-[hidden]down-> B
+
+A *---> B
+A o---[hidden]-> B
+A <---[hidden]left---> B
+A .-[hidden]-> B
+
+A ~> B
+A <~ B
+A ~ B
+A ~~ B
+
+A = B
+
+@enduml

@@ -7,7 +7,9 @@
 
 skinparam dpi 200
 
-rectangle r
+rectangle "r2" as r2 {
+  rectangle r
+}
 
 node "with text" as n
 
@@ -24,8 +26,9 @@ Rel(system, con, "text")
 
 ' This is a comment
 together {
-  circle "circle text" as c /'
-        this is not allowed
+  circle "circle text" as c
+  /'
+        ' this is not allowed
   '/
   hexagon h
 }
@@ -40,6 +43,8 @@ database "database" as db #line.dashed:red /' this is allowed '/
 hexagon "database" as hex #line.dashed:red {
     circle circ
 }
+
+Container(tag, "text", "tech", "desc", $sprite="python")
 
 
 h -> c
